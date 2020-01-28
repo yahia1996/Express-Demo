@@ -1,0 +1,52 @@
+{% extends '@MorivenBundle/Resources/views/layout.html.twig' %}
+
+{% block content %}
+    <div class="table-responsive text-nowrap mg-bt-50">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>N_Bor</th>
+                <th>Exp</th>
+                <th>Destinataire</th>
+                <th>Ville</th>
+                <th>Lieu</th>
+                <th>Nature</th>
+                <th>Nbr</th>
+                <th>Tel</th>
+                <th>Montant</th>
+                <th>Espece</th>
+                <th>Tentative</th>
+                <th>Motif</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for verification in verifications %}
+                <tr>
+                    <th scope="row">{{ verification.id }}</th>
+                    <td>{{ verification.nbor }}</td>
+                    <td>{{ verification.exp }}</td>
+                    <td>{{ verification.destinataire }}</td>
+                    <td>{{ verification.ville }}</td>
+                    <td>{{ verification.lieu }}</td>
+                    <td>{{ verification.nature }}</td>
+                    <td>{{ verification.nbr }}</td>
+                    <td>{{ verification.tel }}</td>
+                    <td>{{ verification.montant }}</td>
+                    <td>{{ verification.espece != '' ? verification.espece : 'N/A' }}</td>
+                    <td>{{ verification.tentative != '' ? verification.tentative : 'N/A' }}</td>
+                    <td>{{ verification.motif != '' ? verification.motif : 'N/A' }}</td>
+                    <td>{{ verification.status != '' ? verification.status : 'N/A' }}</td>
+                    <td>
+                        <a href="{{ path('verification_post', {'verificationId' : verification.id }) }}" class="btn btn-primary">Verify</a>
+                        <a href="{{ path('verification_delete', {'verificationId' : verification.id }) }}"
+                           class="btn btn-danger">Cancel</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

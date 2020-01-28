@@ -1,0 +1,28 @@
+services:
+    moriven.repository:
+        abstract: true
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        calls:
+            - [setLogger, ['@?logger']]
+
+    moriven.ordre_repository:
+        class: MorivenBundle\Repository\OrdreRepository
+        parent: moriven.repository
+        arguments: ['MorivenBundle:Ordre']
+
+    moriven.user_repository:
+        class: MorivenBundle\Repository\UserRepository
+        parent: moriven.repository
+        arguments: ['MorivenBundle:User']
+
+    moriven.verification_repository:
+        class: MorivenBundle\Repository\VerificationRepository
+        parent: moriven.repository
+        parent: moriven.repository
+        arguments: ['MorivenBundle:Verification']
+
+    moriven.mailer_service:
+        class: MorivenBundle\Service\MailerService
+        arguments:
+            - '@templating'
+            - '@mailer'

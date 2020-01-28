@@ -1,0 +1,69 @@
+{% extends '@MorivenBundle/Resources/views/layout.html.twig' %}
+
+{% block content %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <h2 class="mg-top-30">Import Excel File into Database</h2>
+
+        <div class="outer-container mg-bt-50 mg-top-30">
+            <form action="{{ path('moriven_ordre_import') }}" method="POST" name="frmExcelImport" id="frmExcelImport"
+                  enctype="multipart/form-data">
+                <div>
+                    <label>Choose Excel File</label>
+                    <input type="file" name="file" id="file" accept=".xls,.xlsx" required>
+                    <button type="submit" id="submit" name="import" class="btn-submit">Import</button>
+                </div>
+            </form>
+        </div>
+
+        {% if success is defined and success %}
+            <div class="alert alert-success" role="alert">
+                File imported successfully !
+            </div>
+        {% endif %}
+    {% endif %}
+
+        <div class="table-responsive text-nowrap mg-bt-50">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>N_Bor</th>
+                    <th>Exp</th>
+                    <th>Destinataire</th>
+                    <th>Ville</th>
+                    <th>Lieu</th>
+                    <th>Nature</th>
+                    <th>Nbr</th>
+                    <th>Tel</th>
+                    <th>Montant</th>
+                    <th>Espece</th>
+                    <th>Tentative</th>
+                    <th>Motif</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <th scope="row">{{ order.id }}</th>
+                        <td>{{ order.nbor }}</td>
+                        <td>{{ order.exp }}</td>
+                        <td>{{ order.destinataire}}</td>
+                        <td>{{ order.ville }}</td>
+                        <td>{{ order.lieu }}</td>
+                        <td>{{ order.nature }}</td>
+                        <td>{{ order.nbr }}</td>
+                        <td>{{ order.tel }}</td>
+                        <td>{{ order.montant }}</td>
+                        <td>{{ order.espece != '' ? order.espece : 'N/A' }}</td>
+                        <td>{{ order.tentative != '' ? order.tentative : 'N/A' }}</td>
+                        <td>{{ order.motif != '' ? order.motif : 'N/A' }}</td>
+                        <td>{{ order.status != '' ? order.status : 'N/A' }}</td>
+                        <td><a href="{{ path('moriven_ordre_edit', {'orderId' : order.id }) }}" class="btn btn-primary">Edit</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends '@MorivenBundle/Resources/views/layout.html.twig' %}
+
+{% block content %}
+    <div class="table-responsive text-nowrap mg-bt-50">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Ville</th>
+                <th>Lieu</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ user.id }}</th>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if ';' in user.ville %}
+                            {% set villes = user.ville|split(';') %}
+                            {% for ville in villes %}
+                                {{ ville|capitalize }} <br>
+                            {% endfor %}
+                        {% else %}
+                            {{ user.ville != '' ? user.ville|capitalize : 'N/A' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if ';' in user.lieu %}
+                            {% set lieus = user.lieu|split(';') %}
+                            {% for lieu in lieus %}
+                                {{ lieu|capitalize }} <br>
+                            {% endfor %}
+                        {% else %}
+                            {{ user.lieu != '' ? user.lieu|capitalize : 'N/A' }}
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ path('users_edit', {'userId' : user.id }) }}" class="btn btn-primary">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

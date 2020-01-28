@@ -1,0 +1,100 @@
+{% extends '@MorivenBundle/Resources/views/layout.html.twig' %}
+
+{% block content %}
+    <div class="row mg-top-30">
+        <div class="container">
+            <form action="{{ path('moriven_ordre_edit', {'orderId' : order.0.id }) }}" method="post" class="mg-bt-50" novalidate>
+                <div class="form-group">
+                    <label for="Id">Id</label>
+                    <input class="form-control" type="text" value="{{ order.0.id }}" name="orderId" placeholder="{{ order.0.id }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="N_Bor">N_Bor</label>
+                    <input type="text" class="form-control" id="N_Bor" value="{{ order.0.nbor }}" placeholder="{{ order.0.nbor }}" name="nbor">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="Exp">Exp</label>
+                    <input type="text" class="form-control" id="Exp" value="{{ order.0.exp }}" placeholder="{{ order.0.exp }}" name="exp">
+                </div>
+                <div class="form-group">
+                    <label for="Destinataire">Destinataire</label>
+                    <input type="text" class="form-control" id="Destinataire" value="{{ order.0.destinataire }}" placeholder="{{ order.0.destinataire }}" name="destinataire">
+                </div>
+                <div class="form-group">
+                    <label for="Ville">Ville</label>
+                    <input type="text" class="form-control" id="Ville" value="{{ order.0.ville }}" placeholder="{{ order.0.ville }}" name="ville">
+                </div>
+                <div class="form-group">
+                    <label for="Lieu">Lieu</label>
+                    <input type="text" class="form-control" id="Lieu" value="{{ order.0.lieu }}" placeholder="{{ order.0.lieu }}" name="lieu">
+                </div>
+                <div class="form-group">
+                    <label for="Nature">Nature</label>
+                    <input type="text" class="form-control" id="Nature" value="{{ order.0.nature }}" placeholder="{{ order.0.nature }}" name="nature">
+                </div>
+                <div class="form-group">
+                    <label for="Nbr">Nbr</label>
+                    <input type="text" class="form-control" id="Nbr" value="{{ order.0.nbr }}" placeholder="{{ order.0.nbr }}" name="nbr">
+                </div>
+                <div class="form-group">
+                    <label for="Tel">Tel</label>
+                    <input type="text" class="form-control" id="Tel" value="{{ order.0.tel }}" placeholder="{{ order.0.tel }}" name="tel">
+                </div>
+                <div class="form-group">
+                    <label for="Montant">Montant</label>
+                    <input type="text" class="form-control" id="Montant" value="{{ order.0.montant }}" placeholder="{{ order.0.montant }}" name="montant">
+                </div>
+                <div class="form-group">
+                    <label for="espece">Espéce</label>
+                    <input type="text" class="form-control" id="espece" value="{{ order.0.espece }}" placeholder="{{ order.0.espece }}" name="espece">
+                </div>
+                <div class="form-group">
+                    <label for="Tentative">Tentative</label>
+                    <input type="text" class="form-control" id="Tentative" value="{{ order.0.tentative }}" placeholder="{{ order.0.tentative }}" name="tentative">
+                </div>
+                <div class="form-group">
+                    <label for="Motif">Motif</label>
+                    <input type="text" class="form-control" id="Motif" value="{{ order.0.motif }}" placeholder="{{ order.0.motif }}" name="motif">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" onchange="updateStatus()" class="form-control">
+                        <option value="{{ order.0.status }}">--Current status is {{ order.0.status != '' ? order.0.status : 'N/A' }}--</option>
+                        <option value="ok">OK</option>
+                        <option value="rdv">RDV</option>
+                        <option value="inj">Injoignable</option>
+                    </select>
+                </div>
+                <div id="next_date" class="form-group no-display">
+                    <label for="next">Next Date</label>
+                    <input id="next" class="form-control" type="text" name="next_date" value="{{ order.0.next_date }}" placeholder="dd/mm/yyyy">
+                </div>
+                <div id="description" class="form-group no-display">
+                    <label for="desc">Description</label>
+                    <input id="desc" class="form-control" value="{{ order.0.description }}" type="text" name="description">
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function updateStatus() {
+            d = document.getElementById("status").value;
+
+            if (d === 'rdv') {
+                document.getElementById("desc").setAttribute('required', "true");
+                document.getElementById("next_date").classList.remove('no-display');
+                document.getElementById("description").classList.add('no-display');
+            } else if (d === 'inj') {
+                document.getElementById("next").setAttribute('required', "true");
+                document.getElementById("next_date").classList.add('no-display');
+                document.getElementById("description").classList.remove('no-display');
+            } else {
+                document.getElementById("next_date").classList.add('no-display');
+                document.getElementById("description").classList.add('no-display');
+            }
+        }
+    </script>
+{% endblock %}
+

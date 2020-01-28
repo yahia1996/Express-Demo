@@ -1,0 +1,39 @@
+{% extends '@MorivenBundle/Resources/views/layout.html.twig' %}
+
+{% block content %}
+    <form action="{{ path('users_edit', {'userId' : user.0.id }) }}" method="post" class="mg-bt-50">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Ville</th>
+                    <th>Lieu</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">{{ user.0.id }}</th>
+                    <td>{{ user.0.username }}</td>
+                    <td>{{ user.0.email }}</td>
+                    <td>
+                        {% for key,value in places %}
+                            <input type="checkbox" name="ville_{{ key }}" value="{{ key }}"> {{ key|capitalize }} <br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for key,value in places %}
+                            {% for data in value %}
+                                <input type="checkbox" name="lieu_{{ data }}" value="{{ data }}"> {{ data|capitalize }} <br>
+                            {% endfor %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+{% endblock %}

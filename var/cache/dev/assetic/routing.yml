@@ -1,0 +1,5 @@
+_assetic:
+    resource: .
+    type: assetic
+_app:
+    resource: 'C:\wamp64\www\Express-Demo\Express-Demo/app/config/routing_dev.yml'
